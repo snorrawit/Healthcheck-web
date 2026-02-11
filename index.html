@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<title>Healthcheck</title>
+
+<style>
+
+body{
+    margin:0;
+    background:#9bb8ee;
+    font-family: Verdana, sans-serif;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+
+.phone{
+    width:320px;
+    height:640px;
+    background:black;
+    border-radius:40px;
+    padding:12px;
+    box-shadow:0 0 30px rgba(0,0,0,0.7);
+}
+
+
+.screen{
+    width:100%;
+    height:100%;
+    background:#1e1e1e;
+    border-radius:30px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    color:white;
+}
+
+
+.status-bar{
+    height:30px;
+    padding:5px 15px;
+    font-size:14px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+
+.box1{
+    background:#00c3ff;
+    text-align:center;
+    padding:12px;
+    font-weight:bold;
+}
+
+
+.content{
+    flex:1;
+    overflow-y:auto;
+    padding:20px;
+}
+
+
+input{
+    width:100%;
+    padding:10px;
+    margin:10px 0 15px;
+    border-radius:12px;
+    border:none;
+    background:#2a2a2a;
+    color:white;
+}
+
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:15px;
+    background:#00c3ff;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+
+.nav-bar{
+    height:70px;
+    background:#111;
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+    border-top:1px solid #333;
+}
+
+.nav-btn{
+    width:45px;
+    height:45px;
+    background:#222;
+    border-radius:50%;
+}
+
+
+@media (max-width:400px){
+    .phone{
+        width:100%;
+        height:100vh;
+        border-radius:0;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+<div class="screen">
+
+    
+    <div class="status-bar">
+        <span id="time">12:00</span>
+        <span>📶 🔋</span>
+    </div>
+
+    
+    <div class="box1">
+        เว็ปตรวจสอบสุขภาพเบื้องต้น
+    </div>
+
+    
+    <div class="content">
+
+        จำนวนชั่วโมงการนอน :
+        <input type="number" id="sleep">
+
+        จำนวนแก้วน้ำที่ดื่ม :
+        <input type="number" id="water">
+
+        จำนวนครั้งออกกำลังกายในหนึ่งสัปดาห์ :
+        <input type="number" id="exercise">
+
+        <h2 id="ลัพลัพท์"></h2>
+
+        <button onclick="Helth()">ตรวจสอบสุขภาพ</button>
+
+    </div>
+
+    
+    <div class="nav-bar">
+        <div class="nav-btn"></div>
+        <div class="nav-btn"></div>
+        <div class="nav-btn"></div>
+    </div>
+
+</div>
+</div>
+
+<script>
+
+
+function updateTime(){
+    let now = new Date();
+    let h = now.getHours().toString().padStart(2,"0");
+    let m = now.getMinutes().toString().padStart(2,"0");
+
+    document.getElementById("time").innerText = h + ":" + m;
+}
+setInterval(updateTime,1000);
+updateTime();
+
+
+function Helth() {
+
+    let s = Number(document.getElementById("sleep").value);
+    let w = Number(document.getElementById("water").value);
+    let e = Number(document.getElementById("exercise").value);
+
+    let s1 = (s < 4) ? 0 : (s <= 7 ? 1 : 2);
+    let w1 = (w < 4) ? 0 : (w <= 7 ? 1 : 2);
+    let e1 = (e === 0) ? 0 : (e <= 3 ? 1 : 2);
+
+    let total = s1 + w1 + e1;
+
+    let result = "";
+    if(total < 3){
+        result = "สุขภาพมีความเสี่ยง";
+    }
+    else if(total < 5){
+        result = "สุขภาพปานกลาง";
+    }
+    else{
+        result = "สุขภาพดี";
+    }
+
+    document.getElementById("ลัพลัพท์").innerHTML = result;
+}
+
+</script>
+
+</body>
+</html>
